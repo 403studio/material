@@ -1,32 +1,104 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <Header></Header>
+    <div class="container">
+      <SideNav class="nav"></SideNav>
+      <router-view class="view"></router-view>
     </div>
-    <router-view/>
+    <Footer></Footer>
+    <!-- <div class="mobile-toggle-wrap" @click="isMobileShow=true">
+      <vue-cards-icon
+        class="mobile-toggle-wrap__icon"
+        :symbol="false"
+        :size="26"
+        name="mobile"
+        color="#628cf5"
+      ></vue-cards-icon>开启移动端预览
+    </div>
+    <mobile-frame v-if="isMobileShow" :show.sync="isMobileShow"></mobile-frame> -->
   </div>
 </template>
 
+<script>
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
+import SideNav from './components/SideNav.vue'
+// import MobileFrame from './components/mobile-frame.vue'
+import router from './router'
+
+export default {
+  name: 'app',
+  data () {
+    return {
+      isMobileShow: false
+    }
+  },
+  watch: {
+    $route (to, from) {
+      // if (to.path === '/') {
+      //   router.push({ name: 'introduce' })
+      // }
+    }
+  },
+  mounted () {
+    if ('onhashchange' in window) {
+      window.onhashchange = function (ev) {
+        const name = window.location.hash.substring(2)
+        router.push({ name })
+      }
+    }
+  },
+  components: {
+    Header,
+    SideNav,
+    Footer
+  }
+}
+</script>
+
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+// @import './assets/scss/index';
+
+.container {
+  margin: 48px auto;
+  width: 90%;
+  background-color: #fff;
+  box-shadow: 0 4px 30px 0 rgba(223, 225, 230, 0.5);
+  .nav {
+    float: left;
+    width: 210px;
+  }
+  .view {
+    float: left;
+    width: calc(100% - 215px);
+    padding: 32px 48px 48px;
+    box-sizing: border-box;
+  }
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+.container:after {
+  content: '';
+  clear: both;
+  display: block;
+}
+.mobile-toggle-wrap {
+  position: fixed;
+  right: 70px;
+  top: 18px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  color: #628cf5;
+  background-color: #fff;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px;
+  border: 1px solid #628cf5;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  &:hover {
+    border-radius: 14px;
+    opacity: 0.7;
   }
 }
 </style>

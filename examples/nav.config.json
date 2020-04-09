@@ -1,0 +1,48 @@
+{
+  "开发指南": [
+    {
+      "name": "site-index",
+      "path": "/"
+    },
+    {
+      "name": "introduce",
+      "path": "/introduce",
+      "desc": "介绍"
+    },
+    {
+      "name": "start",
+      "path": "/start",
+      "desc": "快速上手"
+    },
+    {
+      "name": "logs",
+      "path": "/logs",
+      "desc": "更新日志"
+    },
+    {
+      "name": "contribute",
+      "path": "/contribute",
+      "desc": "开发指南"
+    },
+    {
+      "name": "index",
+      "isMobile": "1",
+      "path": "/index",
+      "type": "pages"
+    }
+  ],
+  "物料": [
+    {
+      "desc": "移动端",
+      "isMobile": "1",
+      "items": [
+        {
+          "desc": "checkbox复选框",
+          "name": "checkbox",
+          "isMobile": "1",
+          "path": "/checkbox"
+        }
+      ]
+    }
+  ]
+}
