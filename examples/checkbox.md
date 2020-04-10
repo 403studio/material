@@ -1,9 +1,14 @@
-# 支持自定义选择值和未选中值得Checkbox
+## 支持自定义选择值和未选中值得Checkbox
 基于Vant checkbox组件二次开发
 
-安装使用：`zlzv add checkbox`
+### 安装使用
 
-::: demo 通过`checked-value`和`un-checked-value`来指定值
+```shell
+zlzv add checkbox
+```
+
+
+:::demo 通过`checked-value`和`un-checked-value`来指定值
 
 ```html
 <zv-checkbox class="test" v-model="test" checked-value="X" un-checked-value="">选项框一</zv-checkbox>
@@ -33,7 +38,7 @@ export default {
 
 :::
 
-## Props
+### Props
 兼容所有vant checkbox的相关参数和事件处理
 
 | 参数 | 说明 | 类型 | 可选值| 默认值 |

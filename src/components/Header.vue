@@ -1,52 +1,33 @@
-
 <template>
-  <header
-    class="page-header"
-    :style="$route.name === 'index' ? 'box-shadow:none' : 'box-shadow:0 10px 60px 0 rgba(29,29,31,0.07)'"
-  >
-    <div class="header-container">
-      <a href="https://github.com/Eamonnzhang/vue-cards" target="__blank">
-        <span class="name">TDFE技术部前端物料库</span>
-      </a>
-    </div>
-  </header>
+  <div class="headerWrapper">
+    <header class="header" ref="header">
+      <div class="container">
+        hello
+      </div>
+    </header>
+  </div>
 </template>
-<script>
-export default {
-  data () {
-    return {}
+
+<style lang="scss" scoped>
+  .headerWrapper {
+    height: 80px;
   }
-}
-</script>
-<style type="text/scss" lang="scss">
-// @import '../assets/scss/index';
-.page-header {
-  background-color: #fff;
-  box-shadow: 0 10px 60px 0 rgba(29, 29, 31, 0.07);
-  opacity: 0.98;
-  position: relative !important;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 80px;
-  transition: all 0.3s;
-  z-index: 100;
-  .header-container {
-    width: 90%;
-    margin: 0 auto;
-    a {
-      display: flex;
-      align-items: center;
-      height: 80px;
-    }
-    .name {
-      color: #628cf5;
-      font-size: 20px;
-      margin-left: 5px;
-    }
-    .icon {
-      width: 100px;
+
+  .header {
+    height: 80px;
+    background-color: #fff;
+    color: #fff;
+    top: 0;
+    left: 0;
+    width: 100%;
+    line-height: 80px;
+    z-index: 100;
+    position: relative;
+
+    .container {
+      height: 100%;
+      box-sizing: border-box;
+      border-bottom: 1px solid #DCDFE6;
     }
   }
-}
 </style>

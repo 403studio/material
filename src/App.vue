@@ -1,104 +1,85 @@
 <template>
-  <div id="app">
-    <Header></Header>
-    <div class="container">
-      <SideNav class="nav"></SideNav>
-      <router-view class="view"></router-view>
+  <div id="app" :class="{ 'is-component': isComponent }">
+    <main-header v-if="lang !== 'play'"></main-header>
+    <div class="main-cnt">
+      <router-view></router-view>
     </div>
-    <Footer></Footer>
-    <!-- <div class="mobile-toggle-wrap" @click="isMobileShow=true">
-      <vue-cards-icon
-        class="mobile-toggle-wrap__icon"
-        :symbol="false"
-        :size="26"
-        name="mobile"
-        color="#628cf5"
-      ></vue-cards-icon>开启移动端预览
-    </div>
-    <mobile-frame v-if="isMobileShow" :show.sync="isMobileShow"></mobile-frame> -->
+    <main-footer v-if="lang !== 'play' && !isComponent"></main-footer>
   </div>
 </template>
 
 <script>
-import Header from './components/Header.vue'
-import Footer from './components/Footer.vue'
-import SideNav from './components/SideNav.vue'
-// import MobileFrame from './components/mobile-frame.vue'
-import router from './router'
+import { use } from '@/locale'
+import zhLocale from '@/locale/lang/zh-CN'
+import enLocale from '@/locale/lang/en'
+import esLocale from '@/locale/lang/es'
+import frLocale from '@/locale/lang/fr'
+
+const lang = location.hash.replace('#', '').split('/')[1] || 'zh-CN'
+const localize = lang => {
+  switch (lang) {
+    case 'zh-CN':
+      use(zhLocale)
+      break
+    case 'es':
+      use(esLocale)
+      break
+    case 'fr-FR':
+      use(frLocale)
+      break
+    default:
+      use(enLocale)
+  }
+}
+localize(lang)
 
 export default {
   name: 'app',
-  data () {
-    return {
-      isMobileShow: false
+
+  computed: {
+    lang () {
+      return this.$route.path.split('/')[1] || 'zh-CN'
+    },
+    isComponent () {
+      return /^component-/.test(this.$route.name || '')
     }
   },
+
   watch: {
-    $route (to, from) {
-      // if (to.path === '/') {
-      //   router.push({ name: 'introduce' })
-      // }
-    }
-  },
-  mounted () {
-    if ('onhashchange' in window) {
-      window.onhashchange = function (ev) {
-        const name = window.location.hash.substring(2)
-        router.push({ name })
+    lang (val) {
+      if (val === 'zh-CN') {
+        this.suggestJump()
       }
+      localize(val)
     }
   },
-  components: {
-    Header,
-    SideNav,
-    Footer
+
+  methods: {
+    suggestJump () {
+      if (process.env.NODE_ENV !== 'production') return
+
+      const href = location.href
+      const preferGithub = localStorage.getItem('PREFER_GITHUB')
+      const cnHref = href.indexOf('eleme.cn') > -1 || href.indexOf('element-cn') > -1 || href.indexOf('element.faas') > -1
+      if (cnHref || preferGithub) return
+      setTimeout(() => {
+        if (this.lang !== 'zh-CN') return
+        this.$confirm('建议大陆用户访问部署在国内的站点，是否跳转？', '提示')
+          .then(() => {
+            location.replace('https://element.eleme.cn')
+          })
+          .catch(() => {
+            localStorage.setItem('PREFER_GITHUB', 'true')
+          })
+      }, 1000)
+    }
+  },
+
+  mounted () {
+    localize(this.lang)
+    if (this.lang === 'zh-CN') {
+      this.suggestJump()
+    }
   }
 }
 </script>
-
-<style lang="scss">
-// @import './assets/scss/index';
-
-.container {
-  margin: 48px auto;
-  width: 90%;
-  background-color: #fff;
-  box-shadow: 0 4px 30px 0 rgba(223, 225, 230, 0.5);
-  .nav {
-    float: left;
-    width: 210px;
-  }
-  .view {
-    float: left;
-    width: calc(100% - 215px);
-    padding: 32px 48px 48px;
-    box-sizing: border-box;
-  }
-}
-
-.container:after {
-  content: '';
-  clear: both;
-  display: block;
-}
-.mobile-toggle-wrap {
-  position: fixed;
-  right: 70px;
-  top: 18px;
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  color: #628cf5;
-  background-color: #fff;
-  height: 40px;
-  line-height: 40px;
-  padding: 0 20px;
-  border: 1px solid #628cf5;
-  cursor: pointer;
-  transition: all 0.5s ease;
-  &:hover {
-    border-radius: 14px;
-    opacity: 0.7;
-  }
-}
-</style>
