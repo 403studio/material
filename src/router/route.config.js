@@ -31,9 +31,9 @@ const registerRoute = (navConfig) => {
   Object.keys(navConfig).forEach((lang, index) => {
     const navs = navConfig[lang]
     route.push({
-      path: `/${lang}/component`,
-      redirect: `/${lang}/component/installation`,
-      component: load(lang, 'component'),
+      path: `/${lang}/material`,
+      redirect: `/${lang}/material/introduce`,
+      component: load(lang, 'material'),
       children: []
     })
     navs.forEach(nav => {

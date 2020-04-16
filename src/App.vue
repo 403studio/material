@@ -78,7 +78,8 @@ export default {
   mounted () {
     localize(this.lang)
     if (this.lang === 'zh-CN') {
-      this.suggestJump()
+      // TODO: 国内镜像跳转
+      // this.suggestJump()
     }
   }
 }

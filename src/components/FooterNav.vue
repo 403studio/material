@@ -90,8 +90,8 @@ export default {
   methods: {
     setNav () {
       const nav = navConfig[this.lang]
-      this.nav = [nav[0]].concat(nav[3].children)
-      nav[4].groups.map(group => group.list).forEach(list => {
+      this.nav = [nav[0]].concat(nav[2].children)
+      nav[3].groups.map(group => group.list).forEach(list => {
         this.nav = this.nav.concat(list)
       })
     },
@@ -109,7 +109,7 @@ export default {
     },
 
     handleNavClick (direction) {
-      this.$router.push(`/${this.lang}/component${direction === 'prev' ? this.leftNav.path : this.rightNav.path}`)
+      this.$router.push(`/${this.lang}/material${direction === 'prev' ? this.leftNav.path : this.rightNav.path}`)
     }
   },
 

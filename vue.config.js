@@ -5,6 +5,7 @@ function resolve (dir) {
 }
 
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   chainWebpack: config => {
     config.resolve.alias
       .set('packages', resolve('packages'))
